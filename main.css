@@ -13,6 +13,13 @@ p{
   text-align: center;
 }
 
+a{
+ text-decoration: none;
+ color: #333333;
+ padding: 2px 6px 2px 6px;
+ border: 2px solid #352DE8;
+}
+
 #container{
   border: 2px solid black;
   width:75%;

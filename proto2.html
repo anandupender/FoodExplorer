@@ -1,0 +1,131 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+
+  </head>
+  <body>
+    <h1 id="title"> Welcome to
+      <span style='color: #FF3F53'>"</span>
+      <span style='color: #FF3F53'>Y</span>
+      <span style='color: #352DE8'>e</span>
+      <span style='color: #00bbb5'>s</span>
+      &nbsp;
+      <span style='color: #E8A143'>A</span>
+      <span style='color: #352DE8'>n</span>
+      <span style='color: #FF3F53'>d</span>
+      <span style='color: #352DE8'>"</span>
+      &nbsp;
+      <span style='color: #352DE8'>B</span>
+      <span style='color: #00bbb5'>o</span>
+      <span style='color: #FF3F53'>t</span>
+    </h1>
+
+    <!--
+        Suggest New Ingredients that would work
+        Yes And Machine
+        Show possible bases it would go well with!
+        Cooking Methods!
+        Link to Recipes
+   -->
+    <p>Experiment with new flavor combinations and the computer will help you discover doog flavor combinations.</p>
+    <div id="container">
+      <div id="guess-container">
+        <h1 id="guess-text"> thinking...</h1>
+      </div>
+      <div id="ingredient-container">
+        <h2 id="curr-ingred-text">Looks like we have </h2>
+
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Garlic</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Yogurt</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Chocolate</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Olive Oil</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Chilli Flakes</h3>
+        </div>
+      </div>
+    <div>
+
+    <script type="text/javascript">
+
+      var correlations = {"Garlic":[{"Olive Oil":1.0}, {"Yogurt":.3}, {"Chilli Flakes":.9}, {"Chocolate":.1}], "Olive Oil":[{"Garlic":1.0}, {"Yogurt":.4}, {"Chilli Flakes":.9}, {"Chocolate":.3}], "Yogurt":[{"Garlic":.1}, {"Olive Oil":.3}, {"Chilli Flakes":.2}, {"Chocolate":1.0}], "Chocolate":[{"Garlic":0}, {"Olive Oil":.4}, {"Chilli Flakes":.2}, {"Yogurt":1.0}], "Chilli Flakes":[{"Garlic":.9}, {"Olive Oil":.8}, {"Chocolate":.2}, {"Yogurt":.2}]}
+      var currRecipeList = [];
+
+      var ingredients = document.getElementsByClassName("ingredient");
+      console.log(ingredients);
+      for (var ingred in ingredients){
+        ingred.onclick = changeColor;
+      }
+
+      var currIngredients = document.getElementById("curr-ingred-text");
+      var mainGuess = document.getElementById("guess-text");
+
+      function changeColor(item) {
+        var ingredientName = item.childNodes[1].innerHTML;
+
+        if(item.id == "false"){
+          item.style.border="2px solid #352DE8";
+          item.childNodes[1].style.color = "#352DE8";
+          item.id="true";
+          currRecipeList.push(ingredientName);
+        }else{
+          item.style.border="2px solid black";
+          item.childNodes[1].style.color = "black";
+          item.id="false";
+          currRecipeList.splice( currRecipeList.indexOf(ingredientName), 1 );
+        }
+
+        currIngredients.innerHTML = "If you have extra: " //restart
+        for (var i in currRecipeList){
+          currIngredients.innerHTML += "<span class='new-ingredient'>"  + currRecipeList[i] + "</span> , ";
+        }
+
+        if(currRecipeList.length == 1){
+          var currIngredient = currRecipeList[currRecipeList.length - 1]
+          var ingredComparison = correlations[currIngredient];
+          console.log(ingredComparison);
+          var highestNum = 0;
+          var bestPairing;
+          for (i = 0; i < ingredComparison.length; i++){
+            if (Object.values(ingredComparison[i])[0] > highestNum){
+              highestNum = Object.values(ingredComparison[i])[0];
+              bestPairing = Object.keys(ingredComparison[i])[0];
+            }
+          }
+          mainGuess.innerHTML = "That may go well with " + bestPairing;
+          console.log(bestPairing);
+          mainGuess.className = "new-ingredient";
+        }
+        else{
+          mainGuess.innerHTML = "thinking..."
+          mainGuess.className = null;
+        }
+
+        // if(currRecipeList.includes("Garlic") && currRecipeList.includes("Olive Oil") && currRecipeList.includes("Chilli Flakes") && currRecipeList.length == 3){
+        //   mainGuess.innerHTML = "Arabiatta";
+        //   mainGuess.className = "new-ingredient";
+        // }else if(currRecipeList.includes("Parmesan") && currRecipeList.includes("Basil") && currRecipeList.includes("Pine Nuts") && currRecipeList.includes("Olive Oil") && currRecipeList.length == 4){
+        //   mainGuess.innerHTML = "Pesto";
+        //   mainGuess.className = "new-ingredient";
+        // }
+        // else{
+        //   mainGuess.innerHTML = "thinking...";
+        //   mainGuess.className = null;
+        // }
+
+      }
+
+    </script>
+
+  </body>
+</html>
