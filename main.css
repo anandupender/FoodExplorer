@@ -1,0 +1,62 @@
+body{
+  font-family: 'Rubik', sans-serif;
+}
+
+span{
+  margin: 0px;
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: -5px;
+}
+
+p{
+  text-align: center;
+}
+
+#container{
+  border: 2px solid black;
+  width:75%;
+  margin:auto;
+  margin-top:50px;
+  box-shadow: 10px 10px #352DE8;
+}
+#title{
+  text-align: center;
+  margin-top: 40px;
+}
+
+#guess-container{
+  height:100px;
+  margin:25px;
+}
+
+#guess-text{
+  color:#AAAAAA;
+  margin-bottom: 100px;
+}
+
+#curr-ingred-text{
+  margin-bottom: 50px;
+}
+
+#ingredient-container{
+  flex-direction: row;
+  margin:25px;
+}
+
+#ingredient-container:hover{
+  cursor:pointer;
+}
+
+.ingredient{
+  border: 2px solid black;
+  display: inline-block;
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-top:20px;
+  margin-right:20px;
+}
+
+.new-ingredient{
+  color:#352DE8 !important;
+}
