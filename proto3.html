@@ -1,0 +1,47 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="proto3.css">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+  </head>
+  <body>
+
+    <div id="main-container">
+      <div class="title">
+        <span id="title-name"></span> <span id="title-adj"></span> <span id="title-ingred"></span> <span id="title-noun"></span>
+      </div>
+      <div class="ingredient-list">
+      </div>
+      <div class="images-row">
+      </div>
+    </div>
+
+    <script>
+
+      function getRandomInt(max) {
+        min = Math.ceil(0);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - 0)) + 0; //The maximum is exclusive and the minimum is inclusive
+      }
+
+      function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+
+      var myName = "Soh";
+      // https://foxhugh.com/word-lists/list-of-food-adjectives/
+      var myAdjs = ["zesty", "appetizing", "messy", "beautifully imperfect", "beautiful", "simple", "lovely", "expressive", "delectable", "delightful", "new", "scrappy", "gourmet", "hearty"];
+      var myIngreds = ["carrot", "kimchi","banana","steak", "cumin", "mustard greens", "lettuce", "potato", "gravy", "turkey"];
+      var myNouns = ["party", "experience", "extravaganza", "event", "adventure", "meal", "experiment"];
+
+      document.getElementById("title-name").innerHTML = myName + "'s";
+      document.getElementById("title-adj").innerHTML = "&nbsp;" + capitalize(myAdjs[getRandomInt(myAdjs.length)]);
+      document.getElementById("title-ingred").innerHTML = "&nbsp;" + capitalize(myIngreds[getRandomInt(myIngreds.length)]);
+      document.getElementById("title-noun").innerHTML = "&nbsp;" + capitalize(myNouns[getRandomInt(myNouns.length)]);
+
+    </script>
+
+  </body>
+</html>
