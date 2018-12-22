@@ -19,6 +19,14 @@ a, button{
  padding: 2px 6px 2px 6px;
  border: 2px solid #352DE8;
  background-color: white;
+ font-size: 18px;
+}
+
+button:focus {outline:0;}
+
+button:hover{
+  box-shadow: 2px 2px #352DE8;
+  cursor: pointer;
 }
 
 #container{

@@ -32,7 +32,7 @@
       <div id="ingredient-container">
         <h2>Looks like you have these ingredients in your fridge!</h2>
         <h4>Select some anchor ingredients to start</h4>
-        <button onclick="clearColors" style="float:right;">Refresh</button>
+        <button onclick="clearColors(true)" style="float:right;">Refresh</button>
       </div>
     </div>
 
@@ -154,16 +154,21 @@
 
       }
 
-      function clearColors(){
+      function clearColors(andEmpty){
+        if(andEmpty){
+          currRecipeList = [];
+          console.log("clear");
+        }
         var allButtons = ingredientContainer.children;
         console.log(allButtons);
         for (var el = 0; el < allButtons.length; el++){
           if(allButtons[el].className == "ingredient"){
-            if(allButtons[el].getAttribute("data-clicked") === "true"){
+            if(allButtons[el].getAttribute("data-clicked") === "true" && !andEmpty){
               console.log(allButtons[el].id);
               allButtons[el].style.border="2px solid #352DE8";
               allButtons[el].childNodes[0].style.color = "#352DE8";
             }else{
+              allButtons[el].setAttribute("data-clicked", "false")
               allButtons[el].style.border="2px solid #000000";
               allButtons[el].childNodes[0].style.color = "#000000";
             }
