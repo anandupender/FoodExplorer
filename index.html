@@ -4,10 +4,9 @@
     <title></title>
     <link rel="stylesheet" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
-
   </head>
   <body>
-    <a href="proto2.html">Second Prototype </a>
+    <!-- <a href="proto2.html">Second Prototype </a> -->
 
     <h1 id="title"> Welcome to
       <span style='color: #FF3F53'>F</span>
@@ -27,92 +26,148 @@
       <span style='color: #FF3F53'>r</span>
     </h1>
 
-    <!--
-        Suggest New Ingredients that would work
-        Yes And Machine
-        Show possible bases it would go well with!
-        Cooking Methods!
-        Link to Recipes
-   -->
-    <p>Experiment with new flavor combinations and the computer will guess if you're talking about a dish or combination it knows about.</p>
-    <div id="container">
-      <div id="guess-container">
-        <h1 id="guess-text"> thinking...</h1>
-      </div>
-      <div id="ingredient-container">
-        <h2 id="curr-ingred-text">Looks like we have </h2>
 
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Garlic</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Lemon</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Basil</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Roasted Peppers</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Olive Oil</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Pine Nuts</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Chilli Flakes</h3>
-        </div>
-        <div class="ingredient" onclick={changeColor(this);} id="false">
-          <h3>Parmesan</h3>
-        </div>
+    <p>Use what you already have in your kitchen to make new ingredient combinations that you know will taste great.</p>
+    <div id="container">
+      <div id="ingredient-container">
+        <h2>Looks like you have these ingredients in your fridge!</h2>
+        <h4>Select some anchor ingredients to start</h4>
+        <button onclick="clearColors" style="float:right;">Refresh</button>
       </div>
-    <div>
+    </div>
 
     <script type="text/javascript">
 
-      var currRecipeList = [];
+      var allIngredients = ["Arugula", "Avocado", "Basil", "Beef", "Bell Pepper", "Blueberry", "Capers", "Chicken Thigh", "Chilli Flakes", "Chocolate", "Dill", "Eggplant", "Frozen Strawberry", "Garlic", "Honey", "Olive Oil", "Onion", "Pasta", "Pork Chops", "Potato", "Quinoa", "Rice", "Sliced Bread", "Soy Sauce", "Tahini", "Thyme", "Tofu", "Tomato", "Turmeric", "Zuchini"]
+      // var ingredientPairings = {Arugula: [0, 1,	4,	6,	8,	1,	2,	3,	7,	5,	4,	2,	4,	6,	7,	9,	0,	1,	3,	5,	6,	7,	2,	5,	3,	4,	6,	8,	9,	0], Avocado: [6,	0,	2,	5,	6,	7,	2,	1,	9,	6,	3,	1,	0,	9,	8,	7,4,	3,	5,	2,	7,	6,	5,	4,	9,	7,	7,	2,	5,	6], Basil: [0, 1,	4,	6,	8,	1,	2,	3,	7,	5,	4,	2,	4,	6,	7,	9,	0,	1,	3,	5,	6,	7,	2,	5,	3,	4,	6,	8,	9,	0],};
 
-      var ingredients = document.getElementsByClassName("ingredient");
-      console.log(ingredients);
-      for (var ingred in ingredients){
-        ingred.onclick = changeColor;
+      var ingredientPairings = {Arugula: [0,6,9,6,7,6,3,3,6,1,6,4,3,7,5,8,5,5,5,5,5,5,5,5,3,5,3,7,5,4],
+      Avocado: [6,0,3,5,6,3,2,7,7,4,6,7,3,8,6,7,9,4,6,5,8,4,9,3,3,5,2,8,5,4],
+      Basil: [9,3,0,8,8,8,7,9,9,4,8,9,6,10,4,9,8,9,7,7,6,7,4,9,4,8,9,8,4,7],
+      Beef: [6,5,8,0,7,3,5,1,7,2,7,8,1,8,6,8,9,7,1,9,9,9,6,7,7,7,2,6,6,7],
+      "Bell Pepper": [7,6,8,7,0,2,4,8,7,3,6,9,2,8,4,7,8,9,7,6,8,7,5,7,6,7,8,6,7,7],
+      Blueberry: [6,3,8,3,2,0,3,4,2,9,5,2,9,2,9,7,4,3,6,3,3,2,8,5,2,6,3,3,2,2],
+      Capers: [3,2,7,5,4,3,0,9,8,2,6,6,3,7,4,8,7,8,7,6,7,3,5,2,3,6,3,7,4,4],
+      "Chicken Thigh": [3,7,9,1,8,4,9,0,8,3,7,6,2,8,6,8,9,8,2,7,7,8,4,8,8,8,5,7,9,8],
+      "Chilli Flakes": [6,7,9,7,7,2,8,8,0,8,8,8,3,9,6,8,8,9,8,6,7,7,5,6,5,7,7,8,7,8],
+      Chocolate: [1,4,4,2,3,9,2,3,8,0,3,2,4,2,8,6,2,2,2,4,3,2,8,5,4,3,2,3,2,1],
+      Dill: [6,6,8,7,6,5,6,7,8,3,0,7,4,8,6,7,7,7,7,8,7,4,4,2,5,8,4,7,4,6],
+      Eggplant: [4,7,9,8,9,2,6,6,8,2,7,0,3,9,6,9,9,8,8,7,6,6,7,7,9,9,8,8,8,8],
+      "Frozen Strawberry": [3,3,6,1,2,9,3,2,3,4,4,3,0,2,8,3,2,3,6,3,4,3,4,1,2,4,5,2,2,3],
+      Garlic: [7,8,10,8,8,2,7,8,9,2,8,9,2,0,2,9,9,9,8,9,7,7,7,3,4,8,8,8,6,8],
+      Honey: [5,6,4,6,4,9,4,6,6,8,6,6,8,2,0,4,3,4,6,6,6,4,7,5,5,6,7,6,5,5],
+      "Olive Oil": [8,7,9,8,7,7,8,8,8,6,7,9,3,9,4,0,9,9,8,8,6,4,7,3,8,7,6,7,5,8],
+      Onion: [5,9,8,9,8,4,7,9,8,2,7,9,2,9,3,9,0,7,8,6,5,5,5,2,4,6,7,7,6,8],
+      Pasta: [5,4,9,7,9,3,8,8,9,2,7,8,3,9,4,9,7,0,5,3,4,3,2,4,2,7,6,9,6,8],
+      "Pork Chops": [5,6,7,1,7,6,7,2,8,2,7,8,6,8,6,8,8,5,0,7,4,5,5,2,6,8,1,6,6,5],
+      Potato: [5,5,7,9,6,3,6,7,6,4,8,7,3,9,6,8,6,3,7,0,5,4,3,2,3,8,7,6,8,4],
+      Quinoa: [5,8,6,9,8,3,7,7,7,3,7,6,4,7,6,6,5,4,4,5,0,5,2,3,7,5,7,6,4,7],
+      Rice: [5,4,7,9,7,2,3,8,7,2,4,6,3,7,4,4,5,3,5,4,5,0,2,9,5,7,8,7,7,4],
+      "Sliced Bread": [5,9,4,6,5,8,5,4,5,8,4,7,4,7,7,7,5,2,5,3,2,2,0,2,6,8,5,7,5,3],
+      "Soy Sauce": [5,3,9,7,7,5,2,8,6,5,2,7,1,3,5,3,2,4,2,2,3,9,2,0,2,2,8,3,3,5],
+      Tahini: [3,3,4,7,6,2,3,8,5,4,5,9,2,4,5,8,4,2,6,3,7,5,6,2,0,5,6,4,5,6],
+      Thyme: [5,5,8,7,7,6,6,8,7,3,8,9,4,8,6,7,6,7,8,8,5,7,8,2,5,0,7,6,4,7],
+      Tofu: [3,2,9,2,8,3,3,5,7,2,4,8,5,8,7,6,7,6,1,7,7,8,5,8,6,7,0,7,6,6],
+      Tomato: [7,8,8,6,6,3,7,7,8,3,7,8,2,8,6,7,7,9,6,6,6,7,7,3,4,6,7,0,3,8],
+      Turmeric: [5,5,4,6,7,2,4,9,7,2,4,8,2,6,5,5,6,6,6,8,4,7,5,3,5,4,6,3,0,3],
+      Zuchini: [4,4,7,7,7,2,4,8,8,1,6,8,3,8,5,8,8,8,5,4,7,4,3,5,6,7,6,6,3,0]};
+
+      var ingredientContainer = document.getElementById("ingredient-container");
+
+      for(var i = 0; i < allIngredients.length; i++){
+        var newTag = document.createElement("div");
+        var newText = document.createElement("h3");
+        newTag.className = "ingredient";
+        newTag.onclick = run;
+        newTag.id = allIngredients[i];
+        newTag.setAttribute("data-clicked","false");
+        newText.innerHTML = allIngredients[i];
+        newTag.appendChild(newText);
+        ingredientContainer.appendChild(newTag);
       }
+
+      var currRecipeList = [];
 
       var currIngredients = document.getElementById("curr-ingred-text");
       var mainGuess = document.getElementById("guess-text");
 
-      function changeColor(item) {
-        var ingredientName = item.childNodes[1].innerHTML;
+      function run(){
 
-        console.log(item.id);
-        if(item.id == "false"){
-          item.style.border="2px solid #352DE8";
-          item.childNodes[1].style.color = "#352DE8";
-          item.id="true";
+        //add pressed ingredient to list
+        var ingredientName = this.childNodes[0].innerHTML;
+
+        if(this.getAttribute("data-clicked") === "false"){
           currRecipeList.push(ingredientName);
+          this.setAttribute("data-clicked","true");
         }else{
-          item.style.border="2px solid black";
-          item.childNodes[1].style.color = "black";
-          item.id="false";
           currRecipeList.splice( currRecipeList.indexOf(ingredientName), 1 );
+          this.setAttribute("data-clicked","false");
         }
 
-        currIngredients.innerHTML = "Looks like we have " //restart
-        for (var i in currRecipeList){
-          currIngredients.innerHTML += "<span class='new-ingredient'>"  + currRecipeList[i] + "</span> , ";
+        var finalArrayAverages = new Array(allIngredients.length).fill(0);
+
+        for(var j = 0; j < currRecipeList.length; j++){
+          var ingredient = currRecipeList[j].toString();
+          var ingredientArray = ingredientPairings[ingredient];
+          console.log(ingredientArray);
+          //add to sum of all ingredient pairing values
+          for(var k = 0; k < ingredientArray.length; k++){
+            finalArrayAverages[k] = finalArrayAverages[k] + ingredientArray[k];
+          }
         }
 
-        if(currRecipeList.includes("Garlic") && currRecipeList.includes("Olive Oil") && currRecipeList.includes("Chilli Flakes") && currRecipeList.length == 3){
-          mainGuess.innerHTML = "Arabiatta";
-          mainGuess.className = "new-ingredient";
-        }else if(currRecipeList.includes("Parmesan") && currRecipeList.includes("Basil") && currRecipeList.includes("Pine Nuts") && currRecipeList.includes("Olive Oil") && currRecipeList.length == 4){
-          mainGuess.innerHTML = "Pesto";
-          mainGuess.className = "new-ingredient";
+        //calculate average by dividing
+        for(var l = 0; l < finalArrayAverages.length; l++){
+          finalArrayAverages[l] = finalArrayAverages[l]/currRecipeList.length;
         }
-        else{
-          mainGuess.innerHTML = "thinking...";
-          mainGuess.className = null;
+        console.log(finalArrayAverages);
+
+        var len = finalArrayAverages.length;
+        var tempArrayOrdered = finalArrayAverages;
+        var indicesOrdered = new Array(len);
+
+        // get top 3
+        for (var i = 0; i < len; ++i) indicesOrdered[i] = i;
+          // sort descending
+          indicesOrdered.sort(function (a, b) { return tempArrayOrdered[b] - tempArrayOrdered[a]; });
+          tempArrayOrdered.sort(function(a,b) { return b - a; });
+
+          console.log(tempArrayOrdered);
+          console.log(indicesOrdered);  //this is a descending list of the ingredients that go best with what is selected
+
+        //clear all colors
+        clearColors();
+
+        //TOP THREE HERE!!
+        console.log(allIngredients[indicesOrdered[0]] + ", " + allIngredients[indicesOrdered[1]] + ", " + allIngredients[indicesOrdered[2]]);
+        if(!isNaN(tempArrayOrdered[0])){
+          var chosenIngredient1 = document.getElementById(allIngredients[indicesOrdered[0]]);
+          chosenIngredient1.style.border="2px solid #00FF00";
+          chosenIngredient1.childNodes[0].style.color = "#00FF00";
+          var chosenIngredient2 = document.getElementById(allIngredients[indicesOrdered[1]]);
+          chosenIngredient2.style.border="2px solid #00FF00";
+          chosenIngredient2.childNodes[0].style.color = "#00FF00";
+          var chosenIngredient3 = document.getElementById(allIngredients[indicesOrdered[2]]);
+          chosenIngredient3.style.border="2px solid #00FF00";
+          chosenIngredient3.childNodes[0].style.color = "#00FF00";
+        }
+
+      }
+
+      function clearColors(){
+        var allButtons = ingredientContainer.children;
+        console.log(allButtons);
+        for (var el = 0; el < allButtons.length; el++){
+          if(allButtons[el].className == "ingredient"){
+            if(allButtons[el].getAttribute("data-clicked") === "true"){
+              console.log(allButtons[el].id);
+              allButtons[el].style.border="2px solid #352DE8";
+              allButtons[el].childNodes[0].style.color = "#352DE8";
+            }else{
+              allButtons[el].style.border="2px solid #000000";
+              allButtons[el].childNodes[0].style.color = "#000000";
+            }
+          }
         }
 
       }

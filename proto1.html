@@ -1,0 +1,123 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+
+  </head>
+  <body>
+    <a href="proto2.html">Second Prototype </a>
+
+    <h1 id="title"> Welcome to
+      <span style='color: #FF3F53'>F</span>
+      <span style='color: #352DE8'>l</span>
+      <span style='color: #00bbb5'>a</span>
+      <span style='color: #E8A143'>v</span>
+      <span style='color: #352DE8'>o</span>
+      <span style='color: #FF3F53'>r</span>
+      &nbsp;
+      <span style='color: #352DE8'>E</span>
+      <span style='color: #00bbb5'>x</span>
+      <span style='color: #FF3F53'>p</span>
+      <span style='color: #E8A143'>l</span>
+      <span style='color: #FF3F53'>o</span>
+      <span style='color: #352DE8'>r</span>
+      <span style='color: #00bbb5'>e</span>
+      <span style='color: #FF3F53'>r</span>
+    </h1>
+
+    <!--
+        Suggest New Ingredients that would work
+        Yes And Machine
+        Show possible bases it would go well with!
+        Cooking Methods!
+        Link to Recipes
+   -->
+    <p>Experiment with new flavor combinations and the computer will guess if you're talking about a dish or combination it knows about.</p>
+    <div id="container">
+      <div id="guess-container">
+        <h1 id="guess-text"> thinking...</h1>
+      </div>
+      <div id="ingredient-container">
+        <h2 id="curr-ingred-text">Looks like we have </h2>
+
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Garlic</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Lemon</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Basil</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Roasted Peppers</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Olive Oil</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Pine Nuts</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Chilli Flakes</h3>
+        </div>
+        <div class="ingredient" onclick={changeColor(this);} id="false">
+          <h3>Parmesan</h3>
+        </div>
+      </div>
+    <div>
+
+    <script type="text/javascript">
+
+      var currRecipeList = [];
+
+      var ingredients = document.getElementsByClassName("ingredient");
+      console.log(ingredients);
+      for (var ingred in ingredients){
+        ingred.onclick = changeColor;
+      }
+
+      var currIngredients = document.getElementById("curr-ingred-text");
+      var mainGuess = document.getElementById("guess-text");
+
+      function changeColor(item) {
+        var ingredientName = item.childNodes[1].innerHTML;
+
+        console.log(item.id);
+        if(item.id == "false"){
+          item.style.border="2px solid #352DE8";
+          item.childNodes[1].style.color = "#352DE8";
+          item.id="true";
+          currRecipeList.push(ingredientName);
+        }else{
+          item.style.border="2px solid black";
+          item.childNodes[1].style.color = "black";
+          item.id="false";
+          currRecipeList.splice( currRecipeList.indexOf(ingredientName), 1 );
+        }
+
+        currIngredients.innerHTML = "Looks like we have " //restart
+        for (var i in currRecipeList){
+          currIngredients.innerHTML += "<span class='new-ingredient'>"  + currRecipeList[i] + "</span> , ";
+        }
+
+        if(currRecipeList.includes("Garlic") && currRecipeList.includes("Olive Oil") && currRecipeList.includes("Chilli Flakes") && currRecipeList.length == 3){
+          mainGuess.innerHTML = "Arabiatta";
+          mainGuess.className = "new-ingredient";
+        }else if(currRecipeList.includes("Parmesan") && currRecipeList.includes("Basil") && currRecipeList.includes("Pine Nuts") && currRecipeList.includes("Olive Oil") && currRecipeList.length == 4){
+          mainGuess.innerHTML = "Pesto";
+          mainGuess.className = "new-ingredient";
+        }
+        else{
+          mainGuess.innerHTML = "thinking...";
+          mainGuess.className = null;
+        }
+
+      }
+
+    </script>
+
+  </body>
+</html>
