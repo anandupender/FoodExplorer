@@ -16,20 +16,25 @@ p{
 a, button{
  text-decoration: none;
  color: #333333;
- padding: 2px 6px 2px 6px;
+ padding: 10px;
  border: 2px solid #352DE8;
  background-color: white;
  font-size: 18px;
+ margin:10px;
+ text-align: center;
 }
 
-button:focus {outline:0;}
+button:focus, a:focus {outline:0;}
 
-button:hover{
-  box-shadow: 2px 2px #352DE8;
+button:hover, a:hover{
+  border: 3px solid #352DE8;
   cursor: pointer;
 }
 
 #container{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
   border: 2px solid black;
   width:75%;
   margin:auto;
