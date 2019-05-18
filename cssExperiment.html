@@ -1,0 +1,153 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="main2.css">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="input-container">
+      <input type="text" name="ingredient" id="ingredient">
+      INGREDIENT
+    </div>
+    <div id="user-inputs">
+      <div class="input-container">
+        <input type="text" name="color" id="color">
+        COLOR
+      </div>
+      <div class="input-container">
+        <input type="text" name="shape" id="shape">
+        SHAPE
+      </div>
+      <div class="input-container">
+        <input type="text" name="size" id="size">
+        SIZE
+      </div>
+      <div class="input-container">
+        <input type="text" name="quantity" id=quantity>
+        QUANTITY
+      </div>
+    </div>
+    <div class="button-container">
+      <button onclick="createShape('true')">Create</button>
+      <button onclick="loadIn();">Load</button>
+    </div>
+
+    <div id="new-ingredient-container">
+      <span class="css-ingredient" id="new-creation" style="height:20px;width:20px;background-color:black;"></span>
+    </div>
+
+    <script type="text/javascript">
+      var savedIngredients = {};
+      var newCreation = document.getElementById("new-creation");
+
+      var ingredient, color, shape, size, quantity;
+
+      function getValues(){
+        ingredient = document.getElementById("ingredient").value.toLowerCase();
+        color = document.getElementById("color").value.toLowerCase();
+        shape = document.getElementById("shape").value.toLowerCase();
+        size = document.getElementById("size").value.toLowerCase();
+        quantity = document.getElementById("quantity").value.toLowerCase();
+      }
+
+      function setValues(color1, shape1, size1, quantity1){
+        document.getElementById("color").value = color1;
+        document.getElementById("shape").value = shape1;
+        document.getElementById("size").value = size1;
+        document.getElementById("quantity").value = quantity1;
+
+        //when done redraw shape
+        createShape("false");
+      }
+
+      function save(){
+        getValues();
+        var temp = {"name":ingredient, "color":color,"shape":shape,"size":size,"quantity":quantity}
+
+        savedIngredients[ingredient] = temp;
+        console.log(savedIngredients);
+      }
+
+      function createShape(newShape){
+        if(newShape == "true"){
+          save();
+        }
+
+        getValues();
+
+        var sizeMultiplier = 1;
+
+        if(color != ""){
+          newCreation.style.backgroundColor = color;
+        }
+
+        if(size == "large"){
+          sizeMultiplier = 8;
+        }else{
+          sizeMultiplier = 1;
+        }
+
+        var h = 20 * sizeMultiplier;
+        var w = 20 * sizeMultiplier;
+        newCreation.style.height = h+"px";
+        newCreation.style.width = w+"px";
+
+        if(shape == "circle"){
+          newCreation.style.borderRadius = "50%";
+        }
+        else if(shape == "rectangle"){
+          w = w*3;
+          newCreation.style.height = h+"px";
+          newCreation.style.width = w+"px";
+          newCreation.style.borderRadius = "0px";
+        }
+        else if(shape == "rounded rectangle"){
+          w = w*3;
+          newCreation.style.width = w+"px";
+          newCreation.style.borderRadius = "20%";
+        }
+        else if(shape == "droplet"){
+          newCreation.style.borderRadius = "80% 0 55% 50% / 55% 0 80% 50%";
+          newCreation.style.transform = "rotateZ(-45deg)";
+
+        }else if(shape == "leaf"){
+          newCreation.style.borderRadius = h+"px 0px";
+        }
+
+        if(quantity == "many"){
+          for(var i = 0; i < 10; i++){
+            var cln = newCreation.cloneNode(true);
+            cln.classList.add("clone");
+            document.getElementById("new-ingredient-container").appendChild(cln);
+          }
+        }
+        else{ //clear clones
+          var elements = document.getElementsByClassName("clone");
+          while(elements.length > 0){
+              elements[0].parentNode.removeChild(elements[0]);
+          }
+        }
+
+      }
+
+      function loadIn(){
+        ingredient = document.getElementById("ingredient").value;
+        if(ingredient != ""){
+          var array = Object.keys(savedIngredients);
+          if(array.includes(ingredient)){
+            console.log("success");
+            console.log(savedIngredients);
+            var tempObj = savedIngredients[ingredient];
+            setValues(tempObj.color, tempObj.shape, tempObj.size, tempObj.quantity);
+          }else{
+            console.log("not found");
+          }
+        }
+
+      }
+    </script>
+
+  </body>
+</html>

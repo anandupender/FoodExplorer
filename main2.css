@@ -1,0 +1,60 @@
+body{
+  display: flex;
+  flex-direction: column;
+  font-family: 'Rubik', sans-serif;
+  align-items: center;
+  justify-content: center;
+}
+
+a, button{
+ text-decoration: none;
+ color: #333333;
+ padding: 10px;
+ border: 2px solid #352DE8;
+ background-color: white;
+ font-size: 18px;
+ margin:10px;
+ text-align: center;
+}
+
+#user-inputs, .button-container{
+  display:flex;
+  width:100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  margin:20px;
+}
+
+input{
+  border:none;
+  border-bottom: red 2px solid;
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+input:focus, button:focus {outline:0;}
+
+button:hover{
+  cursor:pointer;
+}
+
+#new-ingredient-container{
+  display:flex;
+  width:80%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top:200px;
+  border:black 2px solid;
+  height:300px;
+}
+
+.css-ingredient{
+  margin:5px;
+}
